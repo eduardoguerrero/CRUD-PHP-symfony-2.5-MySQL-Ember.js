@@ -1,0 +1,49 @@
+#route bundle
+trabajo:
+    resource: "@TrabajoBundle/Resources/config/routing.yml"
+    prefix:   /
+#route read, id is optional.    
+verbread:
+    pattern: /read
+    defaults: { _controller: TrabajoBundle:Myrest:read }
+    methods: POST    
+#redirect if error 404.
+_verbread:
+    pattern: /read/   
+    defaults: { _controller: FrameworkBundle:Redirect:redirect,route: verbread }
+    methods: POST
+verbreadid:
+    pattern: /read/{id}
+    defaults: { _controller: TrabajoBundle:Myrest:readid }
+    #methods: POST 
+    requirements:
+        id: \d+
+       
+#redirect if error 404.
+_verbreadid:
+    pattern: /read/{id}/
+    defaults: { _controller: FrameworkBundle:Redirect:redirect,route: verbreadid }
+    methods: POST
+    requirements:
+        id: \d+
+verbdeleteid:
+    pattern: /delete/{id}
+    defaults: { _controller: TrabajoBundle:Myrest:delete }
+    methods: DELETE 
+    requirements:
+        id: \d+
+#redirect if error 404.
+_verbdeleteid:
+    pattern: /delete/{id}/
+    defaults: { _controller: FrameworkBundle:Redirect:redirect,route: verbdeleteid }
+    methods: DELETE
+    requirements:
+        id: \d+
+verbacreate:
+    pattern: /create
+    defaults: { _controller: TrabajoBundle:Myrest:create }
+    methods: POST 
+_verbacreate:
+    pattern: /create/
+    defaults: { _controller: FrameworkBundle:Redirect:redirect,route: verbacreate }
+	methods: POST 

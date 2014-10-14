@@ -1,0 +1,39 @@
+<?php
+//src/Trabajo/trabajoBundle/Entity/Trabajo.php
+namespace Trabajo\TrabajoBundle\Entity;
+use Doctrine\ORM\Mapping as ORM;
+/**
+ * 
+ * @ORM\Entity(repositoryClass="Trabajo\trabajoBundle\Entity\TrabajoRepository")
+ */
+class Trabajo {
+
+    /**
+     * @ORM\Id
+     * @ORM\Column(type="integer") 
+     * @ORM\GeneratedValue
+     */
+    protected $Id;
+
+    /** @ORM\Column(type="string", length=100) */
+    protected $Titulo;
+
+    /** @ORM\Column(type="string", length=300) */
+    protected $Descripcion;
+
+    /** @ORM\Column(type="datetime") */
+    protected $FechaExpiracion;
+
+    /** @ORM\Column(type="datetime") */
+    protected $FechaCreado;
+    
+    /**
+     * Construct
+     * Set default FechaCreado
+     */    
+    public function __construct() {
+        $this->FechaCreado = new \DateTime();
+    }
+
+   
+}

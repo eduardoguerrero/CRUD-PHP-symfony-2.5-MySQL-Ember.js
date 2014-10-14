@@ -1,0 +1,3 @@
+trabajo_homepage:
+    path:     /hello/{name}
+    defaults: { _controller: TrabajoBundle:Default:index }
