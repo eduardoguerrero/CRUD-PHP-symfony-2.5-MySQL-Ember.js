@@ -6,7 +6,7 @@ trabajo:
 verbread:
     pattern: /read
     defaults: { _controller: TrabajoBundle:Myrest:read }
-    methods: POST    
+    #methods: POST    
 #redirect if error 404.
 _verbread:
     pattern: /read/   
@@ -42,8 +42,16 @@ _verbdeleteid:
 verbacreate:
     pattern: /create
     defaults: { _controller: TrabajoBundle:Myrest:create }
-    methods: POST 
+    #methods: POST
 _verbacreate:
-    pattern: /create/
+    pattern: /read/   
     defaults: { _controller: FrameworkBundle:Redirect:redirect,route: verbacreate }
-	methods: POST 
+    #methods: POST
+verupdate:
+    pattern: /update
+    defaults: { _controller: TrabajoBundle:Myrest:update }
+    #methods: PUT
+_verbupdate:
+    pattern: /update/   
+    defaults: { _controller: FrameworkBundle:Redirect:redirect,route: verupdate }
+    #methods: PUT

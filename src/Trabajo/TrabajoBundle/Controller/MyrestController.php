@@ -106,5 +106,27 @@ class MyrestController extends Controller {
             echo "Found Exception:" . $exc->getTraceAsString();
         }
     }
+	    /*
+     * @Function Update
+     * @AcceptVerbs HttpVerbs = Put
+     * @param request
+     * @return JSON
+     * @throw  createNotFoundException when parameter or resource not found
+     */
+    public function UpdateAction() {
+        try {
+            $em = $this->getDoctrine()->getManager();
+            $UpdateRecord = $em->getRepository('TrabajoBundle:Trabajo')->find(1);			
+            $UpdateRecord->setTitulo('Lorem Ipsum UPDATE');
+            $UpdateRecord->setDescripcion('Lorem Ipsum UPDATE');
+            $UpdateRecord->setFechaExpiracion('2014-10-11 19:59:12');
+            $UpdateRecord->setFechaCreado('2014-10-11 19:59:12');
+            $em->persist($UpdateRecord);
+            $em->flush();
+            return new JsonResponse(array('Record updated  succesful #'.$UpdateRecord->getId()));
+        } catch (Exception $exc) {
+            echo "Found Exception:" . $exc->getTraceAsString();
+        }
+    }
 
 }
