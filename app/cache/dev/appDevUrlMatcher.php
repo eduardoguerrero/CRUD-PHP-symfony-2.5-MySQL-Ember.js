@@ -130,8 +130,14 @@ class appDevUrlMatcher extends Symfony\Bundle\FrameworkBundle\Routing\Redirectab
         if (0 === strpos($pathinfo, '/read')) {
             // verbread
             if ($pathinfo === '/read') {
+                if ($this->context->getMethod() != 'POST') {
+                    $allow[] = 'POST';
+                    goto not_verbread;
+                }
+
                 return array (  '_controller' => 'Trabajo\\TrabajoBundle\\Controller\\MyrestController::readAction',  '_route' => 'verbread',);
             }
+            not_verbread:
 
             // _verbread
             if ($pathinfo === '/read/') {

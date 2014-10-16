@@ -12,7 +12,7 @@ var App = Ember.Application.create({
                     type: 'POST',
                     async: false,
                     success: function (data) {
-                        message = data;                      
+                        message = data;
                     }
                 });
         if (xhr.status !== 200) {
@@ -22,23 +22,9 @@ var App = Ember.Application.create({
     },
     ready: function ()
     {
-        console.log(this.read())
-        
-        //this.bootstrap = this.read()
-        var rr = this.read();
-        var result = "[{";
-        for (var i in rr) {
-            result += i + ':"' + rr[i] + '",'
-            //console.log(rr[i])
-        }
-        result += "}]";
-        //this.bootstrap = result
-        this.bootstrap = [{id: '1', titulo: 'titulo1', descripcion: 'descripcipn1', fechaexpiracion: '2012-4-6', fechacreado: '2012-4-5', }]
-
+        this.contentjson = this.read();
     }
-
 });
-
 
 //Router
 App.Router.map(function ()
@@ -56,14 +42,11 @@ App.IndexRoute = Ember.Route.extend({
     }
 });
 
-//en el caso de la ruta trabajos, no queremos ir al server a buscarlos (comportamiente por defecto)
-//si no cargarlos de los datos del bootstrap ;)
+//Para no ir al server a buscarlos, si no cargarlos de los datos del contentjson
 App.TrabajosRoute = Ember.Route.extend({
     model: function ()
     {
-        return App.bootstrap;
-        //return App.Trabajo.find();
-
+        return App.contentjson;
     }
 });
 
@@ -95,28 +78,7 @@ App.TrabajosController = Ember.ArrayController.extend(
                     return (pattern.test(item.id) || pattern.test(item.titulo));
                 });
                 this.set('content', newArray);
-            },
-            // Controllers
-            read: function (id) {
-                this.set('currentResult', this.store.read(id));
-                if (!this.currentResult.errorCode) {
-                    if (Ember.isArray(this.currentResult.data)) { // Read all
-                        var array = Ember.ArrayController.create({content: []});
-                        this.currentResult.data.forEach(function (item, index) {
-                            array.pushObject(App.TrabajoModel.create(item));
-                        });
-                        return array;
-                    }
-                    else { // An object
-                        var customer = this.get('trabajos').findProperty('id', this.currentResult.data.id)
-                        customer && customer.setProperties(this.currentResult.data);
-                        return customer;
-                    }
-                }
-                else { // Empty result
-                    return id ? null : Ember.ArrayController.create({content: []});
-                }
-            },
+            }
         });
 
 App.SortController = Ember.Controller.extend({

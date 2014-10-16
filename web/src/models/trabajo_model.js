@@ -5,17 +5,17 @@
 //adapter: 'DS.FixtureAdapter'
 //});
 
-	
+App.ApplicationAdapter = DS.SocketAdapter;	
 
 
-DS.RESTAdapter.reopen({
-    namespace: 'ember-js'
-});
+/*DS.RESTAdapter.reopen({
+    //namespace: 'ember-js'
+});*/
 
 
-App.Trabajo = DS.Model.extend({
+/*App.Trabajo = DS.Model.extend({
     titulo: DS.attr('string'),
     descripcion: DS.attr('string'),
-    fechaexpiracion: DS.attr('string'),
-    fechacreado: DS.attr('string')
-});
+    fechacreado: DS.attr('string'),
+    fechaexpiracion: DS.attr('string')    
+});*/

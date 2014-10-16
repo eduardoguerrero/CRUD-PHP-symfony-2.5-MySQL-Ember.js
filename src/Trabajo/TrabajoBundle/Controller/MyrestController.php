@@ -43,7 +43,6 @@ class MyrestController extends Controller {
             echo "Found Exception:" . $exc->getTraceAsString();
         }
     }
-
     /*
      * @Function readid
      * @AcceptVerbs HttpVerbs = Post

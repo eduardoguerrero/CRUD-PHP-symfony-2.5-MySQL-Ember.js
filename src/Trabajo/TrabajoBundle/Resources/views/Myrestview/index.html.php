@@ -64,7 +64,7 @@
         <p>{{ descripcion }}</p>
     </script>
 
-    <!--js usados por Ember -->
+    <!--js usados -->
     <script src="src/libs/jquery-1.8.3.min.js"></script>
     <script src="src/libs/handlebars-1.0.0.rc.2.js"></script>
     <script src="src/libs/ember.js"></script>

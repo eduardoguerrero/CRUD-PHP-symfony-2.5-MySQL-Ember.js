@@ -6,7 +6,7 @@ trabajo:
 verbread:
     pattern: /read
     defaults: { _controller: TrabajoBundle:Myrest:read }
-    #methods: POST    
+    methods: POST    
 #redirect if error 404.
 _verbread:
     pattern: /read/   
