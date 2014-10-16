@@ -27,11 +27,11 @@ Query;
             } else {
                 $QueryStringHeredoc = <<<Query
                     SELECT 
-                    o.Id,
-                    o.Titulo,
-                    o.Descripcion,
-                    o.FechaExpiracion,
-                    o.FechaCreado
+                    o.id,
+                    o.titulo,
+                    o.descripcion,
+                    o.fechaexpiracion,
+                    o.fechacreado
                     FROM 
                     TrabajoBundle:Trabajo o 
 Query;

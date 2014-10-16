@@ -13,26 +13,26 @@ class Trabajo {
      * @ORM\Column(type="integer") 
      * @ORM\GeneratedValue
      */
-    protected $Id;
+    protected $id;
 
     /** @ORM\Column(type="string", length=100) */
-    protected $Titulo;
+    protected $titulo;
 
     /** @ORM\Column(type="string", length=300) */
-    protected $Descripcion;
+    protected $descripcion;
 
     /** @ORM\Column(type="string") */
-    protected $FechaExpiracion;
+    protected $fechaexpiracion;
 
     /** @ORM\Column(type="string") */
-    protected $FechaCreado;
+    protected $fechacreado;
     
     /**
      * Construct
      * Set default FechaCreado
      */    
     public function __construct() {
-        $this->FechaCreado = new \DateTime();
+        $this->fechacreado = new \DateTime();
     }
 
    
@@ -44,7 +44,7 @@ class Trabajo {
      */
     public function getId()
     {
-        return $this->Id;
+        return $this->id;
     }
 
     /**
@@ -55,7 +55,7 @@ class Trabajo {
      */
     public function setTitulo($titulo)
     {
-        $this->Titulo = $titulo;
+        $this->titulo = $titulo;
 
         return $this;
     }
@@ -67,7 +67,7 @@ class Trabajo {
      */
     public function getTitulo()
     {
-        return $this->Titulo;
+        return $this->titulo;
     }
 
     /**
@@ -78,7 +78,7 @@ class Trabajo {
      */
     public function setDescripcion($descripcion)
     {
-        $this->Descripcion = $descripcion;
+        $this->descripcion = $descripcion;
 
         return $this;
     }
@@ -90,7 +90,7 @@ class Trabajo {
      */
     public function getDescripcion()
     {
-        return $this->Descripcion;
+        return $this->descripcion;
     }
 
     /**
@@ -101,7 +101,7 @@ class Trabajo {
      */
     public function setFechaExpiracion($fechaExpiracion)
     {
-        $this->FechaExpiracion = $fechaExpiracion;
+        $this->fechaexpiracion = $fechaExpiracion;
 
         return $this;
     }
@@ -113,7 +113,7 @@ class Trabajo {
      */
     public function getFechaExpiracion()
     {
-        return $this->FechaExpiracion;
+        return $this->fechaexpiracion;
     }
 
     /**
@@ -124,7 +124,7 @@ class Trabajo {
      */
     public function setFechaCreado($fechaCreado)
     {
-        $this->FechaCreado = $fechaCreado;
+        $this->fechacreado = $fechaCreado;
 
         return $this;
     }
@@ -136,6 +136,6 @@ class Trabajo {
      */
     public function getFechaCreado()
     {
-        return $this->FechaCreado;
+        return $this->fechacreado;
     }
 }

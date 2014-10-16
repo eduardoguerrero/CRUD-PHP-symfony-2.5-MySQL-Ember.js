@@ -6,8 +6,21 @@ use Symfony\Bundle\FrameworkBundle\Controller\Controller;
 use Symfony\Component\HttpFoundation\JsonResponse;
 use Trabajo\TrabajoBundle\Entity\Trabajo;
 
-
 class MyrestController extends Controller {
+    /*
+     * @Function index
+     * @AcceptVerbs HttpVerbs = Get
+     * @return Template
+     */
+
+    public function indexAction() {
+        try {
+            return $this->render('TrabajoBundle:Myrestview:index.html.php');
+        } catch (Exception $exc) {
+            echo $exc->getTraceAsString();
+        }
+    }
+
     /*
      * @Function read
      * @AcceptVerbs HttpVerbs = Post
@@ -46,7 +59,7 @@ class MyrestController extends Controller {
                 //Get function VerbRead(src\Trabajo\TrabajoBundle\Entity\TrabajoRepository.php)
                 $ListWorkId = $em->getRepository('TrabajoBundle:Trabajo')->VerbRead($id);
                 if (!$ListWorkId) {
-                           return new JsonResponse(array('Resource was not found'));
+                    return new JsonResponse(array('Resource was not found'));
                 }
                 return new JsonResponse($ListWorkId);
             } else {
@@ -75,7 +88,7 @@ class MyrestController extends Controller {
                 }
                 $em->remove($FoundRecord);
                 $em->flush();
-                return new JsonResponse(array("Deleted record successful #".$id));
+                return new JsonResponse(array("Deleted record successful #" . $id));
             } else {
                 throw $this->createNotFoundException('Parameter Not found');
             }
@@ -83,7 +96,7 @@ class MyrestController extends Controller {
             echo "Found Exception:" . $exc->getTraceAsString();
         }
     }
-    
+
     /*
      * @Function create
      * @AcceptVerbs HttpVerbs = Post
@@ -91,6 +104,7 @@ class MyrestController extends Controller {
      * @return JSON
      * @throw  createNotFoundException when parameter or resource not found
      */
+
     public function CreateAction() {
         try {
             $InsertObject = new Trabajo();
@@ -101,29 +115,31 @@ class MyrestController extends Controller {
             $em = $this->getDoctrine()->getEntityManager();
             $em->persist($InsertObject);
             $em->flush();
-            return new JsonResponse(array('Record added  succesful #'.$InsertObject->getId()));
+            return new JsonResponse(array('Record added  succesful #' . $InsertObject->getId()));
         } catch (Exception $exc) {
             echo "Found Exception:" . $exc->getTraceAsString();
         }
     }
-	    /*
+
+    /*
      * @Function Update
      * @AcceptVerbs HttpVerbs = Put
      * @param request
      * @return JSON
      * @throw  createNotFoundException when parameter or resource not found
      */
+
     public function UpdateAction() {
         try {
             $em = $this->getDoctrine()->getManager();
-            $UpdateRecord = $em->getRepository('TrabajoBundle:Trabajo')->find(1);			
+            $UpdateRecord = $em->getRepository('TrabajoBundle:Trabajo')->find(1);
             $UpdateRecord->setTitulo('Lorem Ipsum UPDATE');
             $UpdateRecord->setDescripcion('Lorem Ipsum UPDATE');
             $UpdateRecord->setFechaExpiracion('2014-10-11 19:59:12');
             $UpdateRecord->setFechaCreado('2014-10-11 19:59:12');
             $em->persist($UpdateRecord);
             $em->flush();
-            return new JsonResponse(array('Record updated  succesful #'.$UpdateRecord->getId()));
+            return new JsonResponse(array('Record updated  succesful #' . $UpdateRecord->getId()));
         } catch (Exception $exc) {
             echo "Found Exception:" . $exc->getTraceAsString();
         }

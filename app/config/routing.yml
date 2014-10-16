@@ -54,4 +54,13 @@ verupdate:
 _verbupdate:
     pattern: /update/   
     defaults: { _controller: FrameworkBundle:Redirect:redirect,route: verupdate }
-    #methods: PUT
+    #methods: PUT	
+index:
+    pattern: /index
+    defaults: { _controller: TrabajoBundle:Myrest:index }
+    methods: GET
+#redirect if error 404.
+_index:
+    pattern: /index/   
+    defaults: { _controller: FrameworkBundle:Redirect:redirect,route: index }
+    methods: GET	
