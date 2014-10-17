@@ -1,11 +1,12 @@
-var message = null
+var message = null;
 var App = Ember.Application.create({
     read: function (id) //Get the json
     {
         var message = null;
+        urlrequest = 'http://localhost/symfony2trabajoV1.2/web/read';
         var xhr = $.ajax(
                 {
-                    url: 'http://localhost/symfony2trabajoV1.2/web/read',
+                    url: urlrequest,
                     dataType: 'json',
                     contentType: 'application/json; charset=utf-8',
                     data: JSON.stringify({'id': id}),
@@ -32,8 +33,12 @@ App.Router.map(function ()
     this.resource('trabajos', function ()
     {
         this.resource('trabajo', {path: ':trabajo_id'});
+        this.resource('about');
+        this.resource("new");
     });
 });
+
+
 
 //Ruta index como redireccion a trabajos
 App.IndexRoute = Ember.Route.extend({
@@ -50,42 +55,98 @@ App.TrabajosRoute = Ember.Route.extend({
     }
 });
 
-//Controlador de los trabajos, con funciones para filtrar modelo de datos
-App.TrabajosController = Ember.ArrayController.extend(
+//Controlador de los trabajos, con funciones para filtrar,crud en el modelo de datos
+App.TrabajosController = Ember.ArrayController.extend({
+    originalContent: [],
+    sortProperties: ['titulo'],
+    sortAscending: true,
+    sortBy: function (sortField, sortOrder)
+    {
+        this.set('sortProperties', [sortField]);
+        this.set('sortAscending', (sortOrder === 'asc'));
+    },
+    filterBy: function (letters)
+    {
+        if (letters === "")
         {
-            originalContent: [],
-            sortProperties: ['titulo'],
-            sortAscending: true,
-            sortBy: function (sortField, sortOrder)
-            {
-                this.set('sortProperties', [sortField]);
-                this.set('sortAscending', (sortOrder === 'asc'));
-            },
-            filterBy: function (letters)
-            {
-                if (letters === "")
-                {
-                    this.set('content', this.get('originalContent'));
-                    return;
-                }
-                if (this.get('originalContent').length === 0)
-                    this.set('originalContent', this.get('content'));
+            this.set('content', this.get('originalContent'));
+            return;
+        }
+        if (this.get('originalContent').length === 0)
+            this.set('originalContent', this.get('content'));
 
-                //filtramos por regexp, i flag para ignore case (no distinguir lowercase/uppercase)
-                var pattern = new RegExp(letters, 'i');
-                var newArray = this.get('originalContent').filter(function (item)
-                {
-                    return (pattern.test(item.id) || pattern.test(item.titulo));
-                });
-                this.set('content', newArray);
-            }
+        //filtramos por regexp, i flag para ignore case (no distinguir lowercase/uppercase)
+        var pattern = new RegExp(letters, 'i');
+        var newArray = this.get('originalContent').filter(function (item)
+        {
+            return (pattern.test(item.id) || pattern.test(item.titulo));
         });
+        this.set('content', newArray);
+    },
+    destroyRecord: function () {
+        var id = $(event.target).attr('value');
+        if (typeof id !== "undefined") {
+            if (window.confirm("Esta seguro de eliminar el registro #" + id + "?")) {
+                var message = null;
+                var xhr = $.ajax(
+                        {
+                            url: 'http://localhost/symfony2trabajoV1.2/web/delete/' + id,
+                            dataType: 'json',
+                            contentType: 'application/json; charset=utf-8',
+                            data: JSON.stringify({'id': id}),
+                            type: 'DELETE',
+                            async: false,
+                            success: function (data) {
+                                alert(data);
+                                setTimeout("location.href='http://localhost/symfony2trabajoV1.2/web/index'", 8);
+                            }
+                        });
+                if (xhr.status != 200 && null !== message) {
+                    message = {errorCode: xhr.status, errorMessage: xhr.statusText};
+                    alert("An error ocurred:" + message)
+                }
+            }
+        }
+    }, saveRecords: function () {
+        console.log("###")
+
+        var titulo = $(event.target).attr('titulo');
+
+        console.log(titulo);
+
+        var descripcion = $(event.target).attr('descripcion');
+        var fechacreado = $(event.target).attr('fechacreado');
+        var fechadescripcion = $(event.target).attr('fechadescripcion');
+        if (typeof titulo !== "undefined" && titulo !== "") {
+            if (window.confirm("Guardar el nuevo registro?")) {
+                var message = null;
+                var xhr = $.ajax(
+                        {
+                            url: 'http://localhost/symfony2trabajoV1.2/web/create',
+                            dataType: 'json',
+                            contentType: 'application/json; charset=utf-8',
+                            data: JSON.stringify({'titulo': titulo}),
+                            type: 'POST',
+                            async: false,
+                            success: function (data) {
+                                window.alert(data);
+                            }
+                        });
+                if (xhr.status != 200 && null !== message) {
+                    message = {errorCode: xhr.status, errorMessage: xhr.statusText};
+                    alert("An error ocurred:" + message)
+                }
+            }
+        }
+    }
+
+
+});
 
 App.SortController = Ember.Controller.extend({
     sortBy: function (sortField, sortOrder) {
         this.controllerFor('trabajos').sortyBy(sortField, sortOrder);
     }
-
 });
 
 App.SortView = Ember.View.extend({

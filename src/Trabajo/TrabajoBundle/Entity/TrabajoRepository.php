@@ -12,14 +12,14 @@ class TrabajoRepository extends EntityRepository {
             if (NULL != $id) {
                 $QueryStringHeredoc = <<<Query
                     SELECT 
-                    o.Id,
-                    o.Titulo,
-                    o.Descripcion,
-                    o.FechaExpiracion,
-                    o.FechaCreado
+                    o.id,
+                    o.titulo,
+                    o.descripcion,
+                    o.fechaexpiracion,
+                    o.fechacreado
                     FROM 
                     TrabajoBundle:Trabajo o 
-                    Where o.Id=:id                    
+                    Where o.id=:id                    
 Query;
                 $QueryVerbRead = $em->createQuery($QueryStringHeredoc);
                 $QueryVerbRead->setParameter('id', $id);

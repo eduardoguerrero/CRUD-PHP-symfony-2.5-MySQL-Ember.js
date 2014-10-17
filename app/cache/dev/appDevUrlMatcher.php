@@ -193,18 +193,29 @@ class appDevUrlMatcher extends Symfony\Bundle\FrameworkBundle\Routing\Redirectab
 
         }
 
-        // verbacreate
-        if ($pathinfo === '/create') {
-            return array (  '_controller' => 'Trabajo\\TrabajoBundle\\Controller\\MyrestController::createAction',  '_route' => 'verbacreate',);
-        }
+        if (0 === strpos($pathinfo, '/create')) {
+            // verbacreate
+            if ($pathinfo === '/create') {
+                if ($this->context->getMethod() != 'POST') {
+                    $allow[] = 'POST';
+                    goto not_verbacreate;
+                }
 
-        // _verbacreate
-        if (rtrim($pathinfo, '/') === '/read') {
-            if (substr($pathinfo, -1) !== '/') {
-                return $this->redirect($pathinfo.'/', '_verbacreate');
+                return array (  '_controller' => 'Trabajo\\TrabajoBundle\\Controller\\MyrestController::createAction',  '_route' => 'verbacreate',);
             }
+            not_verbacreate:
 
-            return array (  '_controller' => 'Symfony\\Bundle\\FrameworkBundle\\Controller\\RedirectController::redirectAction',  'route' => 'verbacreate',  '_route' => '_verbacreate',);
+            // _verbacreate
+            if ($pathinfo === '/create/') {
+                if ($this->context->getMethod() != 'POST') {
+                    $allow[] = 'POST';
+                    goto not__verbacreate;
+                }
+
+                return array (  '_controller' => 'Symfony\\Bundle\\FrameworkBundle\\Controller\\RedirectController::redirectAction',  'route' => 'verbacreate',  '_route' => '_verbacreate',);
+            }
+            not__verbacreate:
+
         }
 
         if (0 === strpos($pathinfo, '/update')) {

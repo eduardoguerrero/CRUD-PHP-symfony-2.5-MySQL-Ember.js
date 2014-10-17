@@ -42,11 +42,11 @@ _verbdeleteid:
 verbacreate:
     pattern: /create
     defaults: { _controller: TrabajoBundle:Myrest:create }
-    #methods: POST
+    methods: POST
 _verbacreate:
-    pattern: /read/   
+    pattern: /create/   
     defaults: { _controller: FrameworkBundle:Redirect:redirect,route: verbacreate }
-    #methods: POST
+    methods: POST
 verupdate:
     pattern: /update
     defaults: { _controller: TrabajoBundle:Myrest:update }
