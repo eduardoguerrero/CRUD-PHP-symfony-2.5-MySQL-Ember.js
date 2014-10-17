@@ -1,11 +1,15 @@
 <?php
+
 namespace Trabajo\TrabajoBundle\Entity;
+
 use Doctrine\ORM\Mapping as ORM;
+
+use Symfony\Component\Validator\Constraints as Assert;
 /**
- *@ORM\Entity
- *@ORM\Table(name="Trabajo") 
+ * @ORM\Entity
+ * @ORM\Table(name="Trabajo") 
  * @ORM\Entity(repositoryClass="Trabajo\TrabajoBundle\Entity\TrabajoRepository")
-*/
+ */
 class Trabajo {
 
     /**
@@ -15,7 +19,13 @@ class Trabajo {
      */
     protected $id;
 
-    /** @ORM\Column(type="string", length=100) */
+    /**
+     * @var string $titulo
+     *
+     * @ORM\Column(name="titulo", type="string", length=255)
+     * @Assert\NotNull(message="Debe escribir un titulo")
+     * 
+     */
     protected $titulo;
 
     /** @ORM\Column(type="string", length=300) */
@@ -26,24 +36,21 @@ class Trabajo {
 
     /** @ORM\Column(type="string") */
     protected $fechacreado;
-    
+
     /**
      * Construct
      * Set default FechaCreado
-     */    
+     */
     public function __construct() {
         $this->fechacreado = new \DateTime();
     }
-
-   
 
     /**
      * Get Id
      *
      * @return integer 
      */
-    public function getId()
-    {
+    public function getId() {
         return $this->id;
     }
 
@@ -53,8 +60,7 @@ class Trabajo {
      * @param string $titulo
      * @return Trabajo
      */
-    public function setTitulo($titulo)
-    {
+    public function setTitulo($titulo) {
         $this->titulo = $titulo;
 
         return $this;
@@ -65,8 +71,7 @@ class Trabajo {
      *
      * @return string 
      */
-    public function getTitulo()
-    {
+    public function getTitulo() {
         return $this->titulo;
     }
 
@@ -76,8 +81,7 @@ class Trabajo {
      * @param string $descripcion
      * @return Trabajo
      */
-    public function setDescripcion($descripcion)
-    {
+    public function setDescripcion($descripcion) {
         $this->descripcion = $descripcion;
 
         return $this;
@@ -88,8 +92,7 @@ class Trabajo {
      *
      * @return string 
      */
-    public function getDescripcion()
-    {
+    public function getDescripcion() {
         return $this->descripcion;
     }
 
@@ -99,8 +102,7 @@ class Trabajo {
      * @param \DateTime $fechaExpiracion
      * @return Trabajo
      */
-    public function setFechaExpiracion($fechaExpiracion)
-    {
+    public function setFechaExpiracion($fechaExpiracion) {
         $this->fechaexpiracion = $fechaExpiracion;
 
         return $this;
@@ -111,8 +113,7 @@ class Trabajo {
      *
      * @return \DateTime 
      */
-    public function getFechaExpiracion()
-    {
+    public function getFechaExpiracion() {
         return $this->fechaexpiracion;
     }
 
@@ -122,8 +123,7 @@ class Trabajo {
      * @param \DateTime $fechaCreado
      * @return Trabajo
      */
-    public function setFechaCreado($fechaCreado)
-    {
+    public function setFechaCreado($fechaCreado) {
         $this->fechacreado = $fechaCreado;
 
         return $this;
@@ -134,8 +134,8 @@ class Trabajo {
      *
      * @return \DateTime 
      */
-    public function getFechaCreado()
-    {
+    public function getFechaCreado() {
         return $this->fechacreado;
     }
+
 }

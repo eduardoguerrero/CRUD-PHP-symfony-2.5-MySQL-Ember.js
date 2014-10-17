@@ -10,15 +10,15 @@
     <!-- Template para la vista trabajos -->
     <script type="text/x-handlebars" data-template-name="trabajos">
         <div>
-        <div class="menu">
-        <h4>Listado de Trabajos</h4>
-        {{ partial "ui"}}
+            <div class="menu">
+           
+            {{ partial "ui"}}
         <div id="trabajos">
-        {{ partial "trabajosList"}}
-        </div>
+            {{ partial "trabajosList"}}
+            </div>
         </div>      
         <div class="content">
-        {{ outlet }}
+            {{ outlet }}
         </div>
         </div>
     </script>
@@ -36,8 +36,18 @@
 
     
     
-    <!-- Template para la vista filtrar por ID o titulo -->
+    
+    <!-- Template para la vista filtrar por ID o titulo y agregar nuevo-->
     <script type="text/x-handlebars" data-template-name="filter">
+        <form {{action createRecord on="submit"}}>
+            {{view Ember.TextField valueBinding="titulo" placeholder="Titulo" required="true"}}<br />
+            {{view Ember.TextArea valueBinding="descripcion" placeholder="Descripcion" required="true"}}<br />
+            
+            {{view Ember.TextField valueBinding="fechacreado" placeholder="Fecha Creado" required="true"}}<br />
+            {{view Ember.TextField valueBinding="fechaexpiracion" placeholder="Fecha expiraciion" required="true"}}<br />
+            <button class='btn btn-info' {{action 'createRecord'}}>Guardar</button>
+       </form>
+        
         <form class="navbar-form navbar-left" role="search">
             <div class="form-group">
               <input id="filterField" type="text" class="form-control" placeholder="Buscar por Titulo o ID   ">
@@ -53,9 +63,6 @@
        <div class="navbar-inner">
          <a class="brand" href="#">Inicio</a>
          <ul class="nav">       
-           <li>{{#linkTo 'new'}}Agregar{{/linkTo}}</li>
-         </ul>
-         <ul class="nav">       
            <li>{{#linkTo 'about'}}Acerca de{{/linkTo}}</li>
          </ul>
        </div>
@@ -67,14 +74,12 @@
         <div class="about">
            <div class="alert alert-success" role="alert">Sobre el demo</div>
            <div class="alert alert-info" role="alert">Creado usando symfony2, ember js y MySql.</div>
-    </script>
-    
-  
-  
+    </script>  
   
     <!-- Partial para listar trabajos en el modelo -->
     <script type="text/x-handlebars" data-template-name="_trabajosList">
-        <form {{action destroyRecord on="submit"}}>
+       <h4>Listado de Trabajos</h4>
+      <form {{action destroyRecord on="submit"}}>
         <table  class='table table-striped'>
           <tr class='info'>
              <td>Titulo</td>
@@ -99,21 +104,10 @@
           </tr>
         {{/each}}        
         </table>
-        </form>  
+        </form> 
+
+  
     </script>   
-    
-    <!-- Vista para guardar -->
-  <script type="text/x-handlebars" data-template-name="new">
-    <form {{action destroyRecord on="submit"}}>
-      {{partial "trabajo_fields"}}
-      <button class='btn btn-info' {{action destroyRecord this}}>Guardar</button>
-    </form>
-  </script>
-   <!-- Partial para guardar-->
-  <script type="text/x-handlebars" data-template-name="_trabajo_fields">
-    {{view Ember.TextField valueBinding="titulo" id="titulo" placeholder="Titulo" required="true"}}<br />
-    {{view Ember.TextArea valueBinding="descripcion" id="descripcion" placeholder="Descripcion" required="true"}}<br />
-  </script>
  
 
     <!-- Template para la vista del detalle del trabajo, cuando seleccione uno en especifico-->

@@ -5,6 +5,7 @@ namespace Trabajo\TrabajoBundle\Controller;
 use Symfony\Bundle\FrameworkBundle\Controller\Controller;
 use Symfony\Component\HttpFoundation\JsonResponse;
 use Trabajo\TrabajoBundle\Entity\Trabajo;
+use Symfony\Component\HttpFoundation\Request;
 
 class MyrestController extends Controller {
     /*
@@ -43,6 +44,7 @@ class MyrestController extends Controller {
             echo "Found Exception:" . $exc->getTraceAsString();
         }
     }
+
     /*
      * @Function readid
      * @AcceptVerbs HttpVerbs = Post
@@ -104,14 +106,22 @@ class MyrestController extends Controller {
      * @throw  createNotFoundException when parameter or resource not found
      */
 
-    public function CreateAction() {
+    public function CreateAction(Request $request) {
         try {
+            $titulo = $request->get('titulo');
+            $descripcion = $request->get('descripcion');
+            $fechacreado = $request->get('fechacreado');
+            $fechaexpiracion = $request->get('fechaexpiracion');
             $InsertObject = new Trabajo();
-            $InsertObject->setTitulo('Lorem Ipsum');
-            $InsertObject->setDescripcion('Lorem Ipsum');
-            $InsertObject->setFechaExpiracion('2014-10-11 19:59:12');
-            $InsertObject->setFechaCreado('2014-10-11 19:59:12');
-            $em = $this->getDoctrine()->getEntityManager();
+            $InsertObject->setTitulo($titulo);
+            $InsertObject->setDescripcion($descripcion);
+            $InsertObject->setFechaExpiracion($fechacreado);
+            $InsertObject->setFechaCreado($fechaexpiracion);
+            /*$errores = $this->get('validator')->validate($InsertObject);
+            if (!empty($errores)) {
+                return new JsonResponse(array("Por favor revise la informacion enviada"));
+            }*/
+            $em = $this->getDoctrine()->getManager();
             $em->persist($InsertObject);
             $em->flush();
             return new JsonResponse(array('Record added  succesful #' . $InsertObject->getId()));

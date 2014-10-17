@@ -57,6 +57,11 @@ App.TrabajosRoute = Ember.Route.extend({
 
 //Controlador de los trabajos, con funciones para filtrar,crud en el modelo de datos
 App.TrabajosController = Ember.ArrayController.extend({
+    actions: {
+        select: function (post) {
+            console.log("###########");
+        }
+    },
     originalContent: [],
     sortProperties: ['titulo'],
     sortAscending: true,
@@ -107,25 +112,24 @@ App.TrabajosController = Ember.ArrayController.extend({
                 }
             }
         }
-    }, saveRecords: function () {
-        console.log("###")
-
-        var titulo = $(event.target).attr('titulo');
-
-        console.log(titulo);
-
-        var descripcion = $(event.target).attr('descripcion');
-        var fechacreado = $(event.target).attr('fechacreado');
-        var fechadescripcion = $(event.target).attr('fechadescripcion');
-        if (typeof titulo !== "undefined" && titulo !== "") {
+    }, createRecord: function () {
+        var titulo = this.get('titulo');
+        var descripcion = this.get('descripcion');
+        var fechacreado = this.get('fechacreado');
+        var fechaexpiracion = this.get('fechaexpiracion');
+        if (typeof titulo !== "undefined" && typeof descripcion !== "undefined" && typeof fechacreado !== "undefined" && typeof fechaexpiracion !== "undefined") {
             if (window.confirm("Guardar el nuevo registro?")) {
                 var message = null;
                 var xhr = $.ajax(
                         {
                             url: 'http://localhost/symfony2trabajoV1.2/web/create',
                             dataType: 'json',
-                            contentType: 'application/json; charset=utf-8',
-                            data: JSON.stringify({'titulo': titulo}),
+                            data: {
+                                titulo: titulo,
+                                descripcion: descripcion,
+                                fechacreado: fechacreado,
+                                fechaexpiracion: fechaexpiracion
+                            },
                             type: 'POST',
                             async: false,
                             success: function (data) {
