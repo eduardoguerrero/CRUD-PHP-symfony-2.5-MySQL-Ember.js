@@ -117,10 +117,7 @@ class MyrestController extends Controller {
             $InsertObject->setDescripcion($descripcion);
             $InsertObject->setFechaExpiracion($fechacreado);
             $InsertObject->setFechaCreado($fechaexpiracion);
-            /*$errores = $this->get('validator')->validate($InsertObject);
-            if (!empty($errores)) {
-                return new JsonResponse(array("Por favor revise la informacion enviada"));
-            }*/
+            $ErroresValidator = $this->get('validator')->validate($InsertObject);
             $em = $this->getDoctrine()->getManager();
             $em->persist($InsertObject);
             $em->flush();
@@ -138,14 +135,19 @@ class MyrestController extends Controller {
      * @throw  createNotFoundException when parameter or resource not found
      */
 
-    public function UpdateAction() {
+    public function UpdateAction(Request $request) {
         try {
+            $id = $request->get('id');
+            $titulo = $request->get('titulo');
+            $descripcion = $request->get('descripcion');
+            $fechacreado = $request->get('fechacreado');
+            $fechaexpiracion = $request->get('fechaexpiracion');
             $em = $this->getDoctrine()->getManager();
-            $UpdateRecord = $em->getRepository('TrabajoBundle:Trabajo')->find(1);
-            $UpdateRecord->setTitulo('Lorem Ipsum UPDATE');
-            $UpdateRecord->setDescripcion('Lorem Ipsum UPDATE');
-            $UpdateRecord->setFechaExpiracion('2014-10-11 19:59:12');
-            $UpdateRecord->setFechaCreado('2014-10-11 19:59:12');
+            $UpdateRecord = $em->getRepository('TrabajoBundle:Trabajo')->find($id);
+            $UpdateRecord->setTitulo($titulo);
+            $UpdateRecord->setDescripcion($descripcion);
+            $UpdateRecord->setFechaExpiracion($fechaexpiracion);
+            $UpdateRecord->setFechaCreado($fechacreado);
             $em->persist($UpdateRecord);
             $em->flush();
             return new JsonResponse(array('Record updated  succesful #' . $UpdateRecord->getId()));

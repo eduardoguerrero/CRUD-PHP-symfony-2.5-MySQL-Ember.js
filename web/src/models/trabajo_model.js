@@ -1,16 +1,7 @@
 // Models
-//App.Store = DS.Store.extend({
-//revision: 11,
-//url: "http://localhost"
-//adapter: 'DS.FixtureAdapter'
-//});
 
 App.ApplicationAdapter = DS.SocketAdapter;	
 
-
-/*DS.RESTAdapter.reopen({
-    //namespace: 'ember-js'
-});*/
 
 
 App.Trabajo = DS.Model.extend({

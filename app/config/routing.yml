@@ -50,11 +50,11 @@ _verbacreate:
 verupdate:
     pattern: /update
     defaults: { _controller: TrabajoBundle:Myrest:update }
-    #methods: PUT
+    methods: PUT
 _verbupdate:
     pattern: /update/   
     defaults: { _controller: FrameworkBundle:Redirect:redirect,route: verupdate }
-    #methods: PUT	
+    methods: PUT	
 index:
     pattern: /index
     defaults: { _controller: TrabajoBundle:Myrest:index }

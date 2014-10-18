@@ -49,15 +49,15 @@ li p {
 }
 .menu {
     float:left;
-    width:210px;
+    width:453px;
     padding-right: 10px;
 }
 .content {
-    margin-left: 150px; 
+    margin-left: 16px; 
     float:left;
     padding-left: 15px;
     border-left:2px solid #666;
-    min-height: 1500px;
+    min-height: 700px;
     width: 260px;
 }
 #trabajos .active:hover, .active {

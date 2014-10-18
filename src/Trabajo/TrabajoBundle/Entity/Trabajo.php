@@ -23,18 +23,36 @@ class Trabajo {
      * @var string $titulo
      *
      * @ORM\Column(name="titulo", type="string", length=255)
-     * @Assert\NotNull(message="Debe escribir un titulo")
-     * 
+     * @Assert\NotNull(message="Titulo es requerido!")
+     * @Assert\MinLength(2)
      */
     protected $titulo;
 
-    /** @ORM\Column(type="string", length=300) */
+    /**
+     * var string $descripcion
+     * 
+     * @ORM\Column(type="string", length=300)
+     * @Assert\NotNull(message="Descripcion es requerido!")
+     * @Assert\MinLength(2)
+     */
     protected $descripcion;
 
-    /** @ORM\Column(type="string") */
+    /** 
+     * @var string $fechaexpiracion
+     * 
+     * @ORM\Column(type="string") 
+     * @Assert\NotNull(message="Fecha de expiracion requerido!")
+     * @Assert\MinLength(2)
+     */
     protected $fechaexpiracion;
 
-    /** @ORM\Column(type="string") */
+    /** 
+     * @var string $fechacreado
+     * 
+     * @ORM\Column(type="string") 
+     * @Assert\NotNull(message="Fecha creado requerido!")
+     * @Assert\MinLength(2)
+     */
     protected $fechacreado;
 
     /**
@@ -62,7 +80,6 @@ class Trabajo {
      */
     public function setTitulo($titulo) {
         $this->titulo = $titulo;
-
         return $this;
     }
 

@@ -34,11 +34,9 @@ App.Router.map(function ()
     {
         this.resource('trabajo', {path: ':trabajo_id'});
         this.resource('about');
-        this.resource("new");
+        this.resource('new');
     });
 });
-
-
 
 //Ruta index como redireccion a trabajos
 App.IndexRoute = Ember.Route.extend({
@@ -57,11 +55,6 @@ App.TrabajosRoute = Ember.Route.extend({
 
 //Controlador de los trabajos, con funciones para filtrar,crud en el modelo de datos
 App.TrabajosController = Ember.ArrayController.extend({
-    actions: {
-        select: function (post) {
-            console.log("###########");
-        }
-    },
     originalContent: [],
     sortProperties: ['titulo'],
     sortAscending: true,
@@ -134,6 +127,40 @@ App.TrabajosController = Ember.ArrayController.extend({
                             async: false,
                             success: function (data) {
                                 window.alert(data);
+                                setTimeout("location.href='http://localhost/symfony2trabajoV1.2/web/index'", 8);
+                            }
+                        });
+                if (xhr.status != 200 && null !== message) {
+                    message = {errorCode: xhr.status, errorMessage: xhr.statusText};
+                    alert("An error ocurred:" + message)
+                }
+            }
+        }
+    },updateRecord: function () {
+        var id = $(event.target).attr('value');
+        var titulo = this.get('titulo');
+        var descripcion = this.get('descripcion');
+        var fechacreado = this.get('fechacreado');
+        var fechaexpiracion = this.get('fechaexpiracion');
+        if (typeof titulo !== "undefined" && typeof descripcion !== "undefined" && typeof fechacreado !== "undefined" && typeof fechaexpiracion !== "undefined") {
+            if (window.confirm("Actualizar el registro#"+id+"?")) {
+                var message = null;
+                var xhr = $.ajax(
+                        {
+                            url: 'http://localhost/symfony2trabajoV1.2/web/update',
+                            dataType: 'json',
+                            data: {
+                                id:id,
+                                titulo: titulo,
+                                descripcion: descripcion,
+                                fechacreado: fechacreado,
+                                fechaexpiracion: fechaexpiracion
+                            },
+                            type: 'PUT',
+                            async: false,
+                            success: function (data) {
+                                window.alert(data);
+                                setTimeout("location.href='http://localhost/symfony2trabajoV1.2/web/index'", 8);
                             }
                         });
                 if (xhr.status != 200 && null !== message) {

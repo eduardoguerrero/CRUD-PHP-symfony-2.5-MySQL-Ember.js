@@ -221,17 +221,25 @@ class appDevUrlMatcher extends Symfony\Bundle\FrameworkBundle\Routing\Redirectab
         if (0 === strpos($pathinfo, '/update')) {
             // verupdate
             if ($pathinfo === '/update') {
+                if ($this->context->getMethod() != 'PUT') {
+                    $allow[] = 'PUT';
+                    goto not_verupdate;
+                }
+
                 return array (  '_controller' => 'Trabajo\\TrabajoBundle\\Controller\\MyrestController::updateAction',  '_route' => 'verupdate',);
             }
+            not_verupdate:
 
             // _verbupdate
-            if (rtrim($pathinfo, '/') === '/update') {
-                if (substr($pathinfo, -1) !== '/') {
-                    return $this->redirect($pathinfo.'/', '_verbupdate');
+            if ($pathinfo === '/update/') {
+                if ($this->context->getMethod() != 'PUT') {
+                    $allow[] = 'PUT';
+                    goto not__verbupdate;
                 }
 
                 return array (  '_controller' => 'Symfony\\Bundle\\FrameworkBundle\\Controller\\RedirectController::redirectAction',  'route' => 'verupdate',  '_route' => '_verbupdate',);
             }
+            not__verbupdate:
 
         }
 
